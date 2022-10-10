@@ -8,6 +8,7 @@ import { ContainerStyled } from "../../styles/container";
 import { HeaderStyled } from "../../styles/header";
 import { LinkRegisterStyled } from "../../styles/link";
 import { ButtonPrimary } from "../../styles/button";
+import { toast } from "react-toastify";
 
 export const LoginPage = () => {
   const navigate = useNavigate();
@@ -30,7 +31,12 @@ export const LoginPage = () => {
           navigate("/dashboard")
         );
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        if (error.response.status === 401) {
+          toast.error("Email e/ou senha inválidos");
+        }
+      });
   };
 
   return (

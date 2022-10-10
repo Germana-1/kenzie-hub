@@ -111,22 +111,22 @@ export const ContainerDashboardStyled = styled.div`
       font-size: 12px;
       color: var(--color-grey-1);
     }
-
-    h2 {
-      font-weight: 700;
-      font-size: 18px;
-      margin-top: 37px;
-      margin-bottom: 23px;
-      text-align: start;
-      padding: 0 20%;
-    }
-    p {
-      font-weight: 400;
-      font-size: 16px;
-      text-align: start;
-      padding: 0 20%;
-    }
   }
+  h2 {
+    font-weight: 700;
+    font-size: 18px;
+    margin-top: 37px;
+    margin-bottom: 23px;
+    text-align: start;
+    padding: 0 20%;
+  }
+  p {
+    font-weight: 400;
+    font-size: 16px;
+    text-align: start;
+    padding: 0 20%;
+  }
+
   @media (max-width: 768px) {
     div {
       flex-direction: column;
