@@ -1,17 +1,15 @@
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { registerSchema } from "../../validation/register";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { ContainerStyled } from "../../styles/container";
 import { LinkStyled } from "../../styles/link";
 import { HeaderStyled } from "../../styles/header";
 import { ButtonPrimary } from "../../styles/button";
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { registerSchema } from "../../validation/register";
 
 export const RegisterPage = () => {
-  const navigate = useNavigate();
-
+  const { onSubmitFunctionRegister } = useContext(UserContext);
   const {
     register,
     handleSubmit,
@@ -19,23 +17,6 @@ export const RegisterPage = () => {
   } = useForm({
     resolver: yupResolver(registerSchema),
   });
-
-  const onSubmitFunction = (data) => {
-    axios
-      .post("https://kenziehub.herokuapp.com/users", data)
-      .then((response) => {
-        if (response) {
-          toast.success("Conta criada com sucesso!");
-        }
-        navigate("/");
-      })
-      .catch((error) => {
-        console.log(error);
-        if (error) {
-          toast.error("Ops! Algo deu errado");
-        }
-      });
-  };
 
   return (
     <>
@@ -47,7 +28,10 @@ export const RegisterPage = () => {
       <ContainerStyled>
         <h1>Crie sua conta</h1>
         <p>Rapido e grátis, vamos nessa</p>
-        <form className="form" onSubmit={handleSubmit(onSubmitFunction)}>
+        <form
+          className="form"
+          onSubmit={handleSubmit(onSubmitFunctionRegister)}
+        >
           <label htmlFor="name">Nome</label>
           <input
             placeholder="Digite aqui seu nome"

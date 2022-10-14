@@ -1,32 +1,16 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { ModalAddTech } from "../../components/ModalAddTech";
+import { UserContext } from "../../context/UserContext";
+import { TechContext } from "../../context/TechContext";
 import { ContainerDashboardStyled } from "../../styles/container";
 import { HeaderDashboardStyled } from "../../styles/header";
 import { LinkStyled } from "../../styles/link";
+import { TechList } from "../../components/TechList";
+import { IoMdAdd } from "react-icons/io";
 
 export const DashboardPage = () => {
-  const [data, setData] = useState({});
-  const navigate = useNavigate();
-
-  const token = window.localStorage.getItem("@TOKEN");
-
-  useEffect(() => {
-    token
-      ? axios
-          .get("https://kenziehub.herokuapp.com/profile", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
-          .then((response) => setData(response.data))
-          .catch((err) => console.log(err))
-      : navigate("/");
-  });
-
-  const logout = () => {
-    window.localStorage.clear();
-  };
+  const { user, logout } = useContext(UserContext);
+  const { showModal, setShowModal } = useContext(TechContext);
 
   return (
     <ContainerDashboardStyled>
@@ -37,15 +21,27 @@ export const DashboardPage = () => {
         </LinkStyled>
       </HeaderDashboardStyled>
       <main>
-        <div>
-          <h1>Olá, {data.name}</h1>
-          <span>{data.course_module}</span>
+        <div className="user">
+          <h1>Olá, {user.name}</h1>
+          <span>{user.course_module}</span>
         </div>
-        <h2>Que pena! Estamos em desenvolvimento :(</h2>
-        <p>
-          Nossa aplicação está em desenvolvimento, em breve teremos novidades
-        </p>
+
+        <div className="containerBtnAdd">
+          <h2>Tecnologias</h2>
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              return setShowModal(!showModal);
+            }}
+          >
+            <IoMdAdd />
+          </button>
+        </div>
+
+        <TechList />
       </main>
+      {showModal && <ModalAddTech />}
     </ContainerDashboardStyled>
   );
 };

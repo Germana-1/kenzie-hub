@@ -70,9 +70,7 @@ export const ContainerStyled = styled.div`
   p {
     font-weight: 400;
     font-size: 12px;
-
     margin-top: 22px;
-
     color: var(--color-grey-1);
   }
 
@@ -94,7 +92,7 @@ export const ContainerStyled = styled.div`
 export const ContainerDashboardStyled = styled.div`
   color: var(--color-grey-0);
 
-  div {
+  .user {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -112,34 +110,37 @@ export const ContainerDashboardStyled = styled.div`
       color: var(--color-grey-1);
     }
   }
-  h2 {
-    font-weight: 700;
-    font-size: 18px;
-    margin-top: 37px;
-    margin-bottom: 23px;
-    text-align: start;
-    padding: 0 20%;
-  }
-  p {
-    font-weight: 400;
-    font-size: 16px;
-    text-align: start;
-    padding: 0 20%;
+  .containerBtnAdd {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px 20%;
+    h2 {
+      font-weight: 600;
+      font-size: 16px;
+    }
+    button {
+      background-color: var(--color-grey-2);
+      width: 32.49px;
+      height: 32px;
+      border-radius: 4px;
+      color: var(--color-grey-0);
+      padding: 5px;
+      font-size: 20px;
+    }
   }
 
   @media (max-width: 768px) {
-    div {
+    .user {
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
       gap: 10px;
       padding: 0 5%;
     }
-    h2 {
-      display: none;
-    }
-    p {
-      display: none;
+
+    .containerBtnAdd {
+      padding: 20px 5%;
     }
   }
 `;

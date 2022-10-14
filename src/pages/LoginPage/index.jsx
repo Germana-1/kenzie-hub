@@ -1,17 +1,16 @@
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { loginSchema } from "../../validation/login";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-
 import { ContainerStyled } from "../../styles/container";
 import { HeaderStyled } from "../../styles/header";
 import { LinkRegisterStyled } from "../../styles/link";
 import { ButtonPrimary } from "../../styles/button";
-import { toast } from "react-toastify";
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { loginSchema } from "../../validation/login";
 
 export const LoginPage = () => {
-  const navigate = useNavigate();
+  const { onSubmitFunctionLogin } = useContext(UserContext);
+
   const {
     register,
     handleSubmit,
@@ -19,25 +18,6 @@ export const LoginPage = () => {
   } = useForm({
     resolver: yupResolver(loginSchema),
   });
-
-  const onSubmitFunction = (data) => {
-    axios
-      .post("https://kenziehub.herokuapp.com/sessions", data)
-      .then((response) => {
-        return (
-          window.localStorage.clear(),
-          window.localStorage.setItem("@TOKEN", response.data.token),
-          window.localStorage.setItem("@USERID", response.data.user.id),
-          navigate("/dashboard")
-        );
-      })
-      .catch((error) => {
-        console.log(error);
-        if (error.response.status === 401) {
-          toast.error("Email e/ou senha inválidos");
-        }
-      });
-  };
 
   return (
     <>
@@ -47,7 +27,7 @@ export const LoginPage = () => {
 
       <ContainerStyled>
         <h1>Login</h1>
-        <form className="form" onSubmit={handleSubmit(onSubmitFunction)}>
+        <form className="form" onSubmit={handleSubmit(onSubmitFunctionLogin)}>
           <label htmlFor="email">Email</label>
           <input
             placeholder="Digite aqui seu email"

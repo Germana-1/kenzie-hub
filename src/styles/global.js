@@ -12,7 +12,10 @@ export const GlobalStyle = createGlobalStyle`
         cursor: pointer;
         border: none;
         background: transparent;
-    }    
+    } 
+    ul, ol, li{
+        list-style: none;
+    }   
     body{
         background-color: var(--color-grey-4);
     }
