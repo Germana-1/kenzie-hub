@@ -45,7 +45,7 @@ export const LoginPage = () => {
           />
           <span>{errors.password?.message}</span>
 
-          <ButtonPrimary type="submit">Enviar</ButtonPrimary>
+          <ButtonPrimary type="submit">Entrar</ButtonPrimary>
         </form>
         <p>Ainda não possui uma conta?</p>
         <LinkRegisterStyled to={"/register"}>Cadastre-se</LinkRegisterStyled>
