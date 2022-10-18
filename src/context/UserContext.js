@@ -20,7 +20,12 @@ export const Provider = ({ children }) => {
               Authorization: `Bearer ${token}`,
             },
           })
-          .then((response) => setUser(response.data))
+          .then((response) => {
+            setUser(response.data);
+            if (response) {
+              navigate("/dashboard");
+            }
+          })
           .catch((error) => {
             console.log(error);
             if (error) {

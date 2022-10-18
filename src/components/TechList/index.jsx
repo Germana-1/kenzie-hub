@@ -8,7 +8,7 @@ export const TechList = () => {
 
   return (
     <ListStyled>
-      {techList.length ? (
+      {techList &&
         techList.map((tech) => (
           <li key={tech.id}>
             <h2>{tech.title}</h2>
@@ -17,10 +17,7 @@ export const TechList = () => {
               <BsTrash />
             </button>
           </li>
-        ))
-      ) : (
-        <h3>Sua lista está vazia</h3>
-      )}
+        ))}
     </ListStyled>
   );
 };
