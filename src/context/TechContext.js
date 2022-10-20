@@ -10,7 +10,9 @@ export const TechContext = createContext();
 
 export const TechProvider = ({ children }) => {
   const [showModal, setShowModal] = useState(false);
+  const [showModalUpdate, setShowModalUpdate] = useState(false);
   const [techList, setTechList] = useState([]);
+  const [tech, setTech] = useState({});
   const { user } = useContext(UserContext);
 
   const { techs } = user;
@@ -63,12 +65,33 @@ export const TechProvider = ({ children }) => {
     }
   }
 
+  async function updateTech(data) {
+    const token = window.localStorage.getItem("@TOKEN");
+    tech.status = data.status;
+
+    if (token) {
+      try {
+        api.defaults.headers.authorization = `Bearer ${token}`;
+        await api.put(`/users/techs/${tech.id}`, data);
+        toast.success("Status alterado com sucesso!");
+        setShowModalUpdate(false);
+      } catch (error) {
+        console.log(error);
+        setShowModalUpdate(false);
+      }
+    }
+  }
+
   return (
     <TechContext.Provider
       value={{
         techList,
         deleteTech,
-
+        updateTech,
+        showModalUpdate,
+        setShowModalUpdate,
+        setTech,
+        tech,
         addTech,
         register,
         handleSubmit,

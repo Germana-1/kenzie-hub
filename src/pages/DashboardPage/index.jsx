@@ -7,10 +7,11 @@ import { HeaderDashboardStyled } from "../../styles/header";
 import { LinkStyled } from "../../styles/link";
 import { TechList } from "../../components/TechList";
 import { IoMdAdd } from "react-icons/io";
+import { ModalUpdateTech } from "../../components/ModalUpdateTech";
 
 export const DashboardPage = () => {
   const { user, logout } = useContext(UserContext);
-  const { showModal, setShowModal } = useContext(TechContext);
+  const { showModal, setShowModal, showModalUpdate } = useContext(TechContext);
 
   return (
     <ContainerDashboardStyled>
@@ -42,6 +43,7 @@ export const DashboardPage = () => {
         <TechList />
       </main>
       {showModal && <ModalAddTech />}
+      {showModalUpdate && <ModalUpdateTech />}
     </ContainerDashboardStyled>
   );
 };

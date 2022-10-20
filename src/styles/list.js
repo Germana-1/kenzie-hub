@@ -28,14 +28,23 @@ export const ListStyled = styled.ul`
 
     span {
       color: var(--color-grey-1);
-      margin-right: 30px;
+      margin-right: 50px;
       font-weight: 400;
       font-size: 12.182px;
     }
-    button {
-      color: var(--color-grey-0);
+
+    div {
       position: absolute;
       right: 20px;
+
+      button {
+        color: var(--color-grey-0);
+        margin-left: 10px;
+
+        & :hover {
+          color: var(--color-primary);
+        }
+      }
     }
   }
   h3 {
