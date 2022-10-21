@@ -81,6 +81,17 @@ export const ModalStyled = styled.div`
         font-size: 12px;
         color: var(--color-primary);
       }
+      .containerBtns {
+        display: flex;
+        position: sticky;
+        width: 100%;
+        padding: 0;
+        background-color: var(--color-grey-3);
+        justify-content: space-between;
+        .btnEdit {
+          width: 70%;
+        }
+      }
     }
   }
 `;

@@ -1,14 +1,36 @@
 import axios from "axios";
-import { createContext, useEffect, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { iDataLogin } from "../pages/LoginPage";
+import { iDataRegister } from "../pages/RegisterPage";
+import { iTech } from "./TechContext";
 
-export const UserContext = createContext();
+interface iProviderProps {
+  children: ReactNode;
+}
 
-export const Provider = ({ children }) => {
+export interface iUser {
+  email: string;
+  id: string;
+  name: string;
+  course_module: string;
+  techs?: iTech[];
+}
+
+interface iTechContext {
+  onSubmitFunctionLogin(data: iDataLogin): void;
+  onSubmitFunctionRegister(data: iDataRegister): void;
+  logout(): void;
+  user: iUser;
+}
+
+export const UserContext = createContext<iTechContext>({} as iTechContext);
+
+export const Provider = ({ children }: iProviderProps) => {
   const navigate = useNavigate();
 
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState<iUser>({} as iUser);
 
   const token = window.localStorage.getItem("@TOKEN");
 
@@ -39,7 +61,7 @@ export const Provider = ({ children }) => {
     window.localStorage.clear();
   };
 
-  const onSubmitFunctionRegister = (data) => {
+  const onSubmitFunctionRegister = (data: iDataRegister) => {
     axios
       .post("https://kenziehub.herokuapp.com/users", data)
       .then((response) => {
@@ -56,7 +78,7 @@ export const Provider = ({ children }) => {
       });
   };
 
-  const onSubmitFunctionLogin = (data) => {
+  const onSubmitFunctionLogin = (data: iDataLogin) => {
     axios
       .post("https://kenziehub.herokuapp.com/sessions", data)
       .then((response) => {

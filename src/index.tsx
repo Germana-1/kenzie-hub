@@ -7,7 +7,9 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "./context/UserContext";
 import { TechProvider } from "./context/TechContext";
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
 root.render(
   <BrowserRouter>
     <Provider>

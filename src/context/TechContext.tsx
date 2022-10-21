@@ -1,21 +1,58 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { createContext, useContext, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import {
+  FieldErrorsImpl,
+  useForm,
+  UseFormHandleSubmit,
+  UseFormRegister,
+} from "react-hook-form";
 import { toast } from "react-toastify";
 import api from "../service/api";
 import { schema } from "../validation/addTech";
 import { UserContext } from "./UserContext";
 
-export const TechContext = createContext();
+interface iTechProviderProps {
+  children: ReactNode;
+}
 
-export const TechProvider = ({ children }) => {
+interface iTechContext {
+  techList: iTech[];
+  deleteTech(id: string): void;
+  updateTech(data: iTech): void;
+  showModalUpdate: boolean;
+  setShowModalUpdate: React.Dispatch<React.SetStateAction<boolean>>;
+  setTech: React.Dispatch<React.SetStateAction<iTech>>;
+  tech: iTech;
+  addTech(data: iTech): void;
+  register: UseFormRegister<iTech>;
+  handleSubmit: UseFormHandleSubmit<iTech>;
+  errors: FieldErrorsImpl<iTech>;
+  showModal: boolean;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface iTech {
+  title?: string;
+  status: string;
+  id?: string;
+}
+
+export const TechContext = createContext<iTechContext>({} as iTechContext);
+
+export const TechProvider = ({ children }: iTechProviderProps) => {
   const [showModal, setShowModal] = useState(false);
   const [showModalUpdate, setShowModalUpdate] = useState(false);
-  const [techList, setTechList] = useState([]);
-  const [tech, setTech] = useState({});
+  const [techList, setTechList] = useState<iTech[]>([] as iTech[]);
+  const [tech, setTech] = useState<iTech>({} as iTech);
   const { user } = useContext(UserContext);
 
-  const { techs } = user;
+  const { techs }: iTech[] | any = user;
   useEffect(() => {
     setTechList(techs);
   }, [techs]);
@@ -24,11 +61,11 @@ export const TechProvider = ({ children }) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<iTech>({
     resolver: yupResolver(schema),
   });
 
-  async function addTech(data) {
+  async function addTech(data: iTech) {
     const token = window.localStorage.getItem("@TOKEN");
 
     if (token) {
@@ -49,7 +86,7 @@ export const TechProvider = ({ children }) => {
     }
   }
 
-  async function deleteTech(id) {
+  async function deleteTech(id: string) {
     const token = window.localStorage.getItem("@TOKEN");
 
     if (token) {
@@ -59,13 +96,15 @@ export const TechProvider = ({ children }) => {
         await api.delete(`/users/techs/${id}`);
         const newTechList = techList.filter((tech) => tech.id !== id);
         setTechList(newTechList);
+        setShowModalUpdate(false);
       } catch (error) {
         console.log(error);
+        setShowModalUpdate(false);
       }
     }
   }
 
-  async function updateTech(data) {
+  async function updateTech(data: iTech) {
     const token = window.localStorage.getItem("@TOKEN");
     tech.status = data.status;
 

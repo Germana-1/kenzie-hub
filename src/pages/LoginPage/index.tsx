@@ -8,6 +8,11 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "../../validation/login";
 
+export interface iDataLogin {
+  email: string;
+  password: string;
+}
+
 export const LoginPage = () => {
   const { onSubmitFunctionLogin } = useContext(UserContext);
 
@@ -15,7 +20,7 @@ export const LoginPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<iDataLogin>({
     resolver: yupResolver(loginSchema),
   });
 

@@ -8,13 +8,23 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "../../validation/register";
 
+export interface iDataRegister {
+  email: string;
+  password: string;
+  confirmPass?: string;
+  name: string;
+  bio: string;
+  contact: string;
+  course_module: string;
+}
+
 export const RegisterPage = () => {
   const { onSubmitFunctionRegister } = useContext(UserContext);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<iDataRegister>({
     resolver: yupResolver(registerSchema),
   });
 

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const ListStyled = styled.ul`
-  background-color: var(--color-grey-2);
+  background-color: var(--color-grey-3);
 
   border-radius: 4px;
   padding: 20px;
@@ -18,6 +18,7 @@ export const ListStyled = styled.ul`
     align-items: center;
     position: relative;
     padding: 0 20px;
+    cursor: pointer;
 
     h2 {
       margin: 0;
@@ -28,23 +29,12 @@ export const ListStyled = styled.ul`
 
     span {
       color: var(--color-grey-1);
-      margin-right: 50px;
+      margin-right: 10px;
       font-weight: 400;
       font-size: 12.182px;
     }
-
-    div {
-      position: absolute;
-      right: 20px;
-
-      button {
-        color: var(--color-grey-0);
-        margin-left: 10px;
-
-        & :hover {
-          color: var(--color-primary);
-        }
-      }
+    &:hover {
+      background-color: var(--color-grey-2);
     }
   }
   h3 {
